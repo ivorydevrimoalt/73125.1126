@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown to 2026</title>
+    <!-- Use Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font and basic body styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Dark background */
+        }
+        
+        /* Keyframe animation for the shaking effect */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        /* Class to apply the shaking animation */
+        .shake-image {
+            animation: shake 0.5s infinite;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <!-- Main container for the countdown timer -->
+    <div class="flex flex-col items-center justify-center text-center p-8 bg-gray-800 rounded-3xl shadow-2xl m-4 md:m-8 max-w-full">
+        <!-- Title for the countdown -->
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6 animate-pulse">2026 Countdown</h1>
+        
+        <!-- Shaking image that is now a link -->
+        <a href="choose.html" class="block mb-8 transition-transform duration-300 transform hover:scale-105">
+            <img 
+                src="https://placehold.co/400x200/FFD700/000000?text=New+Year%27s+Celebration" 
+                alt="New Year Celebration" 
+                class="shake-image rounded-xl w-full max-w-sm md:max-w-md lg:max-w-lg h-auto"
+                onerror="this.src='https://placehold.co/400x200/FFD700/000000?text=Image+Not+Found'; this.alt='Image Not Found';"
+            >
+        </a>
+
+        <!-- Subheading -->
+        <p class="text-lg md:text-xl text-gray-300 mb-8">Time until the new year:</p>
+
+        <!-- Countdown timer display -->
+        <div id="countdown-timer" class="flex flex-wrap justify-center items-end text-white font-mono text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
+            <!-- Days display -->
+            <div class="flex flex-col items-center mx-2 sm:mx-4 my-2">
+                <span id="days" class="bg-blue-600 px-4 py-2 rounded-lg font-bold min-w-[70px] text-center">000</span>
+                <span class="text-sm md:text-base mt-2 text-gray-400">Days</span>
+            </div>
+            <!-- Hours display -->
+            <div class="flex flex-col items-center mx-2 sm:mx-4 my-2">
+                <span id="hours" class="bg-blue-600 px-4 py-2 rounded-lg font-bold min-w-[70px] text-center">00</span>
+                <span class="text-sm md:text-base mt-2 text-gray-400">Hours</span>
+            </div>
+            <!-- Minutes display -->
+            <div class="flex flex-col items-center mx-2 sm:mx-4 my-2">
+                <span id="minutes" class="bg-blue-600 px-4 py-2 rounded-lg font-bold min-w-[70px] text-center">00</span>
+                <span class="text-sm md:text-base mt-2 text-gray-400">Minutes</span>
+            </div>
+            <!-- Seconds display -->
+            <div class="flex flex-col items-center mx-2 sm:mx-4 my-2">
+                <span id="seconds" class="bg-blue-600 px-4 py-2 rounded-lg font-bold min-w-[70px] text-center">00</span>
+                <span class="text-sm md:text-base mt-2 text-gray-400">Seconds</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for the countdown logic -->
+    <script>
+        window.onload = function() {
+            // Get the target date: January 1, 2026
+            const targetDate = new Date("Jan 1, 2026 00:00:00").getTime();
+
+            // Find the HTML elements to display the countdown
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+            const countdownContainer = document.getElementById('countdown-timer');
+
+            // Function to update the countdown
+            function updateCountdown() {
+                // Get the current date and time
+                const now = new Date().getTime();
+                
+                // Calculate the remaining time
+                const distance = targetDate - now;
+
+                // Time calculations for days, hours, minutes, and seconds
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Check if the countdown has finished
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    countdownContainer.innerHTML = '<span class="text-4xl text-green-400 font-bold">Happy New Year!</span>';
+                    return; // Exit the function to prevent further updates
+                }
+
+                // Display the results with leading zeros if needed
+                daysEl.innerHTML = String(days).padStart(3, '0');
+                hoursEl.innerHTML = String(hours).padStart(2, '0');
+                minutesEl.innerHTML = String(minutes).padStart(2, '0');
+                secondsEl.innerHTML = String(seconds).padStart(2, '0');
+            }
+
+            // Call the function once to avoid a 1-second delay
+            updateCountdown();
+            
+            // Update the countdown every 1 second
+            const countdownInterval = setInterval(updateCountdown, 1000);
+        };
+    </script>
+</body>
+</html>
