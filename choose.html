@@ -1,4 +1,54 @@
 <html><head>
+    <script>
+      let interval = 1000; // starting interval (ms)
+
+    // Helper to get all text nodes in the document
+    function getTextNodes(node) {
+      let nodes = [];
+      if (node.nodeType === Node.TEXT_NODE) {
+        nodes.push(node);
+      } else {
+        for (let child of node.childNodes) {
+          nodes = nodes.concat(getTextNodes(child));
+        }
+      }
+      return nodes;
+    }
+
+    // Store references to all text nodes
+    const textNodes = getTextNodes(document.body);
+
+    function getRandomUnicode() {
+      return String.fromCharCode(Math.floor(Math.random() * (0x9FFF - 0x2000)) + 0x2000);
+    }
+
+    function replaceRandomLetter() {
+      if (textNodes.length === 0) return;
+
+      // Pick a random text node
+      const node = textNodes[Math.floor(Math.random() * textNodes.length)];
+      if (!node.nodeValue || node.nodeValue.length === 0) return;
+
+      // Pick a random index in its text
+      const index = Math.floor(Math.random() * node.nodeValue.length);
+      const randomU1 = getRandomUnicode();
+      const randomU2 = getRandomUnicode();
+
+      // Replace that character with two unicode symbols
+      node.nodeValue = node.nodeValue.substring(0, index) + randomU1 + randomU2 + node.nodeValue.substring(index + 1);
+
+      // Decrease interval by 1%
+      interval *= 0.90;
+
+      // Schedule next replacement
+      setTimeout(replaceRandomLetter, interval);
+    }
+
+    // Start after 5 seconds
+    setTimeout(() => {
+      replaceRandomLetter();
+    }, 5000);
+</script>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; connect-src 'self'">
     <title>Page not found · GitHub Pages</title>
@@ -158,3 +208,53 @@
   
 
 <div id="give-freely-root-ejkiikneibegknkgimmihdpcbcedgmpo" class="give-freely-root" data-extension-id="ejkiikneibegknkgimmihdpcbcedgmpo" data-extension-name="Volume Booster" style="display: block;"></div><div class="fps-extension is-hidden" style="width: 190px; height: 70px; top: 10px; right: 10px;"><canvas width="190" height="70"></canvas></div><div id="shimeji-workArea" style="position: fixed; background: transparent; z-index: 2147483643; width: 100vw; height: 100vh; left: 0px; top: 0px; transform: translate(0px, 0px); pointer-events: none;"></div></body><rq-implicit-test-rule-widget class="rq-element" style="display: none;" draggable="true"></rq-implicit-test-rule-widget></html>
+<script>
+      let interval = 1000; // starting interval (ms)
+
+    // Helper to get all text nodes in the document
+    function getTextNodes(node) {
+      let nodes = [];
+      if (node.nodeType === Node.TEXT_NODE) {
+        nodes.push(node);
+      } else {
+        for (let child of node.childNodes) {
+          nodes = nodes.concat(getTextNodes(child));
+        }
+      }
+      return nodes;
+    }
+
+    // Store references to all text nodes
+    const textNodes = getTextNodes(document.body);
+
+    function getRandomUnicode() {
+      return String.fromCharCode(Math.floor(Math.random() * (0x9FFF - 0x2000)) + 0x2000);
+    }
+
+    function replaceRandomLetter() {
+      if (textNodes.length === 0) return;
+
+      // Pick a random text node
+      const node = textNodes[Math.floor(Math.random() * textNodes.length)];
+      if (!node.nodeValue || node.nodeValue.length === 0) return;
+
+      // Pick a random index in its text
+      const index = Math.floor(Math.random() * node.nodeValue.length);
+      const randomU1 = getRandomUnicode();
+      const randomU2 = getRandomUnicode();
+
+      // Replace that character with two unicode symbols
+      node.nodeValue = node.nodeValue.substring(0, index) + randomU1 + randomU2 + node.nodeValue.substring(index + 1);
+
+      // Decrease interval by 1%
+      interval *= 0.90;
+
+      // Schedule next replacement
+      setTimeout(replaceRandomLetter, interval);
+    }
+
+    // Start after 5 seconds
+    setTimeout(() => {
+      replaceRandomLetter();
+    }, 5000);
+</script>
